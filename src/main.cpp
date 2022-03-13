@@ -16,7 +16,7 @@
 #define SERVER_ADDRESS 5
 
 // Singleton instance of the radio driver
-//RH_RF22 driver;
+// RH_RF22 driver;
 RHSoftwareSPI spi;
 // ss_pin nSEL GPIO15
 // irq_pin nIRQ GPIO5
@@ -25,18 +25,21 @@ RH_RF22 driver(22, 23, spi);
 // Class to manage message delivery and receipt, using the driver declared above
 RHReliableDatagram manager(driver, CLIENT_ADDRESS);
 
-void setup() 
+void setup()
 {
   Serial.begin(115200);
 
-  spi.setPins(12,13,14);
+  spi.setPins(12, 13, 14);
 
   if (!manager.init())
     Serial.println("init failed");
   // Defaults after init are 434.0MHz, 0.05MHz AFC pull-in, modulation FSK_Rb2_4Fd36
 }
 
-uint8_t data[] = "FFFFFFFF";
+uint8_t data[] = {0x11, 0x0E, 0x10, 0xE0, 0x50, 0x00, 0x00,
+                  0xAD, 0x00, 0x10, 0x02, 0xBF, 0x00, 0x0D,
+                  0x01, 0x01, 0x00, 0x40, 0x00, 0x41, 0x00,
+                  0x44, 0x4F};
 // Dont put this on the stack:
 uint8_t buf[RH_RF22_MAX_MESSAGE_LEN];
 
