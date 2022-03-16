@@ -91,95 +91,97 @@ void loop()
     driver.setHeaderFlags(0xAD);
 
 
-    // if (counter == 4){    
-    //   // Serial.println("msg1");
-    //   // driver.send(msg1, sizeof(msg1));
-    // // }else if (counter == 5){
-    // //   Serial.println("msg1");
-    // //   driver.send(msg1, sizeof(msg1));
-    // // }else if (counter == 6){
-    // //       Serial.println("msg2");
-    // //       driver.send(msg2, sizeof(msg2));
-    // // }else if (counter == 7){
-    // //       Serial.println("msg2");
-    // //       driver.send(msg2, sizeof(msg2));
-    // // }else if (counter == 8){
-    // //       Serial.println("msg3");
-    // //       driver.send(msg3, sizeof(msg3));
-    // // }else if (counter == 9){
-    // //       Serial.println("msg3");
-    // //       driver.send(msg3, sizeof(msg3));
-    // // }else if (counter == 10){
-    // //       Serial.println("msg4");
-    // //       driver.send(msg4, sizeof(msg4));   
-    // // }else if (counter == 11){
-    //       // Serial.println("msg4");
-    //       // driver.send(msg4, sizeof(msg4));
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==5){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==6){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==7){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==8){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==9){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==10){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==11){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==12){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==13){   
-    //       Serial.println("cmd1");
-    //       driver.send(cmd1, sizeof(cmd1));
-    // }else if (counter ==14){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));
-    //  }else if (counter ==14){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));
-    // }else if (counter ==15){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==16){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==17){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==18){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==19){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==20){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==21){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==22){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));    
-    //       }else if (counter ==23){   
-    //       Serial.println("cmd2");
-    //       driver.send(cmd2, sizeof(cmd2));     
-    // } else {
-    //   counter = 3;
-    // }
+    if (counter == 4){    
+      // Serial.println("msg1");
+      // driver.send(msg1, sizeof(msg1));
+    // }else if (counter == 5){
+    //   Serial.println("msg1");
+    //   driver.send(msg1, sizeof(msg1));
+    // }else if (counter == 6){
+    //       Serial.println("msg2");
+    //       driver.send(msg2, sizeof(msg2));
+    // }else if (counter == 7){
+    //       Serial.println("msg2");
+    //       driver.send(msg2, sizeof(msg2));
+    // }else if (counter == 8){
+    //       Serial.println("msg3");
+    //       driver.send(msg3, sizeof(msg3));
+    // }else if (counter == 9){
+    //       Serial.println("msg3");
+    //       driver.send(msg3, sizeof(msg3));
+    // }else if (counter == 10){
+    //       Serial.println("msg4");
+    //       driver.send(msg4, sizeof(msg4));   
+    // }else if (counter == 11){
+          // Serial.println("msg4");
+          // driver.send(msg4, sizeof(msg4));
+
+
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==5){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==6){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==7){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==8){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==9){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==10){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==11){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==12){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==13){   
+          Serial.println("cmd1");
+          driver.send(cmd1, sizeof(cmd1));
+    }else if (counter ==14){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));
+     }else if (counter ==14){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));
+    }else if (counter ==15){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==16){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==17){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==18){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==19){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==20){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==21){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==22){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));    
+    }else if (counter ==23){   
+          Serial.println("cmd2");
+          driver.send(cmd2, sizeof(cmd2));     
+    } else {
+      counter = 3;
+    }
 
 
   }
