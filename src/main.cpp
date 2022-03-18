@@ -30,9 +30,9 @@ void setup()
   Serial.begin(115200);
     Serial.println("set pin");
   spi.setPins(12, 13, 14);
-    Serial.println("driver init");
+      Serial.println("driver init");
   if (!driver.init())
-    Serial.println("init failed");
+      Serial.println("init failed");
   // Defaults after init are 434.0MHz, 0.05MHz AFC pull-in, modulation FSK_Rb2_4Fd36
 
       Serial.println("setup done");
@@ -50,7 +50,7 @@ void setup()
 // 0x00, 0x50, 0x00, 0x50, 0x00, 0x50, 0x00, 0x50, 0x00, 0x50, 0x7F, 0x3B };
 uint8_t cmd1[] = {0x11, 0x04, 0x03, 0xe9};
 uint8_t cmd2[] = {0x11, 0x04, 0x04, 0xe9};
-uint8_t data[] = {0x11, 0x08, 0x50, 0x50, 0x00, 0x00, 0xAD, 0x9A};
+uint8_t data[] = {0x11, 0x08, 0x50, 0x21, 0x21, 0x21, 0x21, 0x9A};
 // uint8_t data[] = {0x11, 0x04, 0x01, 0x4F};
 
 // Dont put this on the stack:
@@ -79,16 +79,17 @@ void loop()
     Serial.println("Sending data");
     driver.setHeaderFrom(0x21);
     driver.setHeaderTo(0x21);
-    driver.setHeaderId(0x33);
+    driver.setHeaderId(0x21);
     driver.setHeaderFlags(0x21);
     driver.send(data, sizeof(data));
 
   }else{
+
     //driver.updateHeader(data);
-    driver.setHeaderFrom(0x50);
-    driver.setHeaderTo(0x00);
-    driver.setHeaderId(0x00);
-    driver.setHeaderFlags(0xAD);
+    driver.setHeaderFrom(0x21);
+    driver.setHeaderTo(0x21);
+    driver.setHeaderId(0x21);
+    driver.setHeaderFlags(0x21);
 
 
     if (counter == 4){    
@@ -147,9 +148,6 @@ void loop()
           Serial.println("cmd1");
           driver.send(cmd1, sizeof(cmd1));
     }else if (counter ==14){   
-          Serial.println("cmd2");
-          driver.send(cmd2, sizeof(cmd2));
-     }else if (counter ==14){   
           Serial.println("cmd2");
           driver.send(cmd2, sizeof(cmd2));
     }else if (counter ==15){   
