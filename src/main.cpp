@@ -12,8 +12,8 @@
 #include <SPI.h>
 #include <RHSoftwareSPI.h>
 
-#define CLIENT_ADDRESS 0x21
-#define SERVER_ADDRESS 5
+// #define CLIENT_ADDRESS 0x21
+// #define SERVER_ADDRESS 5
 
 // Singleton instance of the radio driver
 // RH_RF22 driver;
@@ -42,7 +42,7 @@ uint8_t cmd1[] = {0x11, 0x04, 0x03, 0xe9};
 // 0x03, 0x02, 0x54, 0x00, 0x00, 0x00, 0xE0, 0x00, 0x41, 0x00, 0x39, 0x00, 0x40, 0x01};
 
 uint8_t cmd2[] = {0x11, 0x04, 0x04, 0xe9};
-uint8_t data[] = {0x11, 0x08, 0x50, 0x50, 0x00, 0x00, 0xAD, 0xFF};
+//uint8_t data[] = {0x11, 0x08, 0x50, 0x50, 0x00, 0x00, 0xAD, 0xFF};
 // uint8_t data[] = {0x11, 0x04, 0x01, 0x4F};
 
 // Dont put this on the stack:
@@ -50,7 +50,7 @@ uint8_t buf[RH_RF22_MAX_MESSAGE_LEN];
 
 int counter = 0;
 
-// void sendiaqdata(void *pvParam);
+void sendiaqdata(void *pvParam);
 
 void setup()
 {
@@ -61,196 +61,216 @@ void setup()
       if (!driver.init())
             Serial.println("init failed");
       // Defaults after init are 434.0MHz, 0.05MHz AFC pull-in, modulation FSK_Rb2_4Fd36
-      // xTaskCreate(sendiaqdata, "sendiaqdata", 2048, NULL, 5, NULL);
+      xTaskCreate(sendiaqdata, "sendiaqdata", 2048, NULL, 5, NULL);
       Serial.println("setup done");
 }
 
-// void sendiaqdata(void *pvParam)
-// {
+void sendiaqdata(void *pvParam)
+{
+uint8_t data[] = {0x11, 0x08, 0x50, 0x50, 0x00, 0x00, 0xAD, 0xFF};
+      Serial.println("sendiaqdata Task start");
+      while (1)
+      {
+            // if (counter < 4)
+            //{
+             driver.setHeaderFrom(0x21);
+             driver.setHeaderTo(0x21);
+             driver.setHeaderId(0x21);
+             driver.setHeaderFlags(0x21);
 
-//       Serial.println("sendiaqdata Task start");
-//       while (1)
-//       {
+            driver.send(data, sizeof(data));
 
-//             driver.setHeaderFrom(0x50);
-//             driver.setHeaderTo(0x00);
-//             driver.setHeaderId(0x00);
-//             driver.setHeaderFlags(0xAD);
-//             driver.send(cmd1, sizeof(cmd1));
-
-//             driver.waitPacketSent();
-//             counter++;
-//             vTaskDelay(1000 / portTICK_PERIOD_MS);
-//       }
-// }
+            driver.waitPacketSent();
+            Serial.println("data send");
+            counter++;
+            //}
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+      }
+}
 
 void loop()
 {
-      Serial.print("counter: ");
-      Serial.println(counter);
-      if (counter < 4)
-      {
+      // Serial.print("counter: ");
+      // Serial.println(counter);
 
-            // uint8_t to    = driver.headerTo();
-            // uint8_t from  = driver.headerFrom();
-            // uint8_t id    = driver.headerId();
-            // uint8_t flags = driver.headerFlags();
-            // Serial.print("RF22 Message To: 0x");
-            // Serial.print(to, HEX);
-            // Serial.print(" From: 0x");
-            // Serial.print(from, HEX);
-            // Serial.print(" Id: 0x");
-            // Serial.print(id, DEC);
-            // Serial.print(" Flags: 0x");
-            // Serial.println(flags, HEX);
-            Serial.println("Sending data");
-            driver.setHeaderFrom(0x21);
-            driver.setHeaderTo(0x21);
-            driver.setHeaderId(0x21);
-            driver.setHeaderFlags(0x21);
-            driver.send(data, sizeof(data));
-      }
-      else
-      {
-            // uint8_t from = 0x50;
-            // uint8_t to = 0x00;
-            // uint8_t id = 0x00;
-            // uint8_t flags = 0xAD;
-            // driver.setHeaderFrom(from);
-            // driver.setHeaderTo(to);
-            // driver.setHeaderId(id);
-            // driver.setHeaderFlags(flags);
+      // // if (counter < 4)
+      // // {
+      // //       Serial.println("Sending data");
+      // //       driver.setHeaderFrom(0x21);
+      // //       driver.setHeaderTo(0x21);
+      // //       driver.setHeaderId(0x21);
+      // //       driver.setHeaderFlags(0x21);
+      // //       driver.send(data, sizeof(data));
+      // //       driver.waitPacketSent();
+      // //       delay(1000);
+      // //       counter++;
+      // // }
 
-            if (counter == 4)
-            {
-                  // Serial.println("msg1");
-                  // driver.send(msg1, sizeof(msg1));
-                  // }else if (counter == 5){
-                  //   Serial.println("msg1");
-                  //   driver.send(msg1, sizeof(msg1));
-                  // }else if (counter == 6){
-                  //       Serial.println("msg2");
-                  //       driver.send(msg2, sizeof(msg2));
-                  // }else if (counter == 7){
-                  //       Serial.println("msg2");
-                  //       driver.send(msg2, sizeof(msg2));
-                  // }else if (counter == 8){
-                  //       Serial.println("msg3");
-                  //       driver.send(msg3, sizeof(msg3));
-                  // }else if (counter == 9){
-                  //       Serial.println("msg3");
-                  //       driver.send(msg3, sizeof(msg3));
-                  // }else if (counter == 10){
-                  //       Serial.println("msg4");
-                  //       driver.send(msg4, sizeof(msg4));
-                  // }else if (counter == 11){
-                  // Serial.println("msg4");
-                  // driver.send(msg4, sizeof(msg4));
+      // if (counter < 4)
+      // {
+      //       // uint8_t to    = driver.headerTo();
+      //       // uint8_t from  = driver.headerFrom();
+      //       // uint8_t id    = driver.headerId();
+      //       // uint8_t flags = driver.headerFlags();
+      //       // Serial.print("RF22 Message To: 0x");
+      //       // Serial.print(to, HEX);
+      //       // Serial.print(" From: 0x");
+      //       // Serial.print(from, HEX);
+      //       // Serial.print(" Id: 0x");
+      //       // Serial.print(id, DEC);
+      //       // Serial.print(" Flags: 0x");
+      //       // Serial.println(flags, HEX);
+      //       Serial.println("Sending data");
+      //       driver.setHeaderFrom(0x21);
+      //       driver.setHeaderTo(0x21);
+      //       driver.setHeaderId(0x21);
+      //       driver.setHeaderFlags(0x21);
+      //       driver.send(data, sizeof(data));
+      // }
+      // else
+      // {
+      //       driver.setHeaderFrom(0x21);
+      //       driver.setHeaderTo(0x21);
+      //       driver.setHeaderId(0x21);
+      //       driver.setHeaderFlags(0x21);
 
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 5)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 6)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 7)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 8)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 9)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 10)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 11)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 12)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 13)
-            {
-                  Serial.println("cmd1");
-                  driver.send(cmd1, sizeof(cmd1));
-            }
-            else if (counter == 14)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 15)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 16)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 17)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 18)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 19)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 20)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 21)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 22)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else if (counter == 23)
-            {
-                  Serial.println("cmd2");
-                  driver.send(cmd2, sizeof(cmd2));
-            }
-            else
-            {
-                  counter = 3;
-            }
-      }
-      driver.waitPacketSent();
+      //       // driver.setHeaderFrom(0x50);
+      //       // driver.setHeaderTo(0x00);
+      //       // driver.setHeaderId(0x00);
+      //       // driver.setHeaderFlags(0xAD);
+
+      //       // if (counter == 4)
+      //       // {
+      //       //       // Serial.println("msg1");
+      //       //       // driver.send(msg1, sizeof(msg1));
+      //       //       // }else if (counter == 5){
+      //       //       //   Serial.println("msg1");
+      //       //       //   driver.send(msg1, sizeof(msg1));
+      //       //       // }else if (counter == 6){
+      //       //       //       Serial.println("msg2");
+      //       //       //       driver.send(msg2, sizeof(msg2));
+      //       //       // }else if (counter == 7){
+      //       //       //       Serial.println("msg2");
+      //       //       //       driver.send(msg2, sizeof(msg2));
+      //       //       // }else if (counter == 8){
+      //       //       //       Serial.println("msg3");
+      //       //       //       driver.send(msg3, sizeof(msg3));
+      //       //       // }else if (counter == 9){
+      //       //       //       Serial.println("msg3");
+      //       //       //       driver.send(msg3, sizeof(msg3));
+      //       //       // }else if (counter == 10){
+      //       //       //       Serial.println("msg4");
+      //       //       //       driver.send(msg4, sizeof(msg4));
+      //       //       // }else if (counter == 11){
+      //       //       // Serial.println("msg4");
+      //       //       // driver.send(msg4, sizeof(msg4));
+
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 5)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 6)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 7)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 8)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 9)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 10)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 11)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 12)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 13)
+      //       // {
+      //       //       Serial.println("cmd1");
+      //       //       driver.send(cmd1, sizeof(cmd1));
+      //       // }
+      //       // else if (counter == 14)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 15)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 16)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 17)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 18)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 19)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 20)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 21)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 22)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else if (counter == 23)
+      //       // {
+      //       //       Serial.println("cmd2");
+      //       //       driver.send(cmd2, sizeof(cmd2));
+      //       // }
+      //       // else
+      //       // {
+      //       //       counter = 3;
+      //       // }
+
+      //       // counter = 3;
+      // }
+      // driver.waitPacketSent();
       delay(1000);
-      counter++;
+      // counter++;
 }
